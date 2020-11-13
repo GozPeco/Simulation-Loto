@@ -7,9 +7,9 @@ namespace SimulationLoto
     class Program
     {
         private static List<int> gridInput = new List<int>();
-        private static int tryNumber;
-        private static List<Grille> totalGrille = new List<Grille>();
-        private static List<Grille> gridsWon = new List<Grille>();
+        private static int trialsNumber;
+        private static List<Grid> allPlayedGrids = new List<Grid>();
+        private static List<Grid> gridsWon = new List<Grid>();
 
         static void Main(string[] args)
         {
@@ -26,15 +26,15 @@ namespace SimulationLoto
 
         private static void Play()
         {
-            Console.WriteLine("Choissisez vos chiffres :");
+            Console.WriteLine("Chose 5 numbers between 1 and 49 :");
             gridInput = ParseInput(Console.ReadLine());
 
-            Console.WriteLine("Nombre d'essaies :");
-            tryNumber = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Number of trials :");
+            trialsNumber = Int32.Parse(Console.ReadLine());
 
-            for (int n = 0; n != tryNumber; n++)
+            for (int n = 0; n != trialsNumber; n++)
             {
-                Console.WriteLine($"ESSAIE NUMERO {n} -----------");
+                Console.WriteLine($"TRIAL NUMBER {n} -----------");
                 Console.WriteLine("");
                 Loto();
                 Console.WriteLine("");
@@ -43,30 +43,30 @@ namespace SimulationLoto
                 Console.WriteLine("");
             }
 
-            Console.WriteLine($"Nombre d'essaie : {tryNumber}");
-            Console.WriteLine($"Numéros choisis : ");
+            Console.WriteLine($"Total number of trials : {trialsNumber}");
+            Console.WriteLine($"Choosen numbers : ");
             gridInput.ForEach(i => Console.Write("{0}\t", i));
             Console.WriteLine("");
 
             int reussiteN = 0;
             int echecN = 0;
 
-            foreach (Grille g in totalGrille)
+            foreach (Grid g in allPlayedGrids)
             {
-                if (g.reussite == true)
+                if (g.success == true)
                 {
                     reussiteN++;
                 }
                 echecN++;
             }
 
-            Console.WriteLine($"Nombre d'echecs : {echecN}");
-            Console.WriteLine($"Nombre de reussite : {reussiteN}");
+            Console.WriteLine($"Number of failure : {echecN}");
+            Console.WriteLine($"Number of success : {reussiteN}");
             if(reussiteN != 0)
             {
-                foreach(Grille grille in gridsWon)
+                foreach(Grid grille in gridsWon)
                 {
-                    Console.WriteLine($"\t- Essaie {grille.index}");
+                    Console.WriteLine($"\t- Try {grille.index}");
                 }
             }
             Console.WriteLine("");
@@ -76,25 +76,25 @@ namespace SimulationLoto
 
         private static void Loto()
         {
-           List<Grille> essaie = new List<Grille>() { new Grille(1), new Grille(2), new Grille(3), new Grille(4), new Grille(5)};
+           List<Grid> essaie = new List<Grid>() { new Grid(1), new Grid(2), new Grid(3), new Grid(4), new Grid(5)};
             
 
-           foreach(Grille grille in essaie)
+           foreach(Grid grid in essaie)
            {
-                totalGrille.Add(grille);
+                allPlayedGrids.Add(grid);
 
-                var numbersNotChoosen = grille.numbers.Except(gridInput);
+                var numbersNotChoosen = grid.numbers.Except(gridInput);
 
                 if (numbersNotChoosen.Count() == 0)
                 {
-                    grille.reussite = true;
-                    grille.numbers.ForEach(i => Console.Write("{0}\t", i));
-                    Console.Write(" REUSSITE !");
+                    grid.success = true;
+                    grid.numbers.ForEach(i => Console.Write("{0}\t", i));
+                    Console.Write(" SUCCESS !");
                     Console.WriteLine(" ");
-                    gridsWon.Add(grille);
+                    gridsWon.Add(grid);
                 }
 
-                grille.numbers.ForEach(i => Console.Write("{0}\t", i));
+                grid.numbers.ForEach(i => Console.Write("{0}\t", i));
                 Console.WriteLine(" ");
             }
 

@@ -4,15 +4,16 @@ using System.Text;
 
 namespace SimulationLoto
 {
-    class Grille
+    class Grid
     {
         public List<int> numbers { get; private set; } = new List<int>();
-        public bool reussite = false;
-        public int index;
+        public int index { get; private set; }
+
+        public bool success = false;
 
         private static Random rnd = new Random();
 
-        public Grille(int _index)
+        public Grid(int _index)
         {
             for (int i = 0; i != 5; i++)
             {
@@ -23,9 +24,7 @@ namespace SimulationLoto
                 }
                 numbers.Add(r);
             }
-
             numbers.Sort();
-
             index = _index;
         }
     }
