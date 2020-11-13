@@ -6,9 +6,10 @@ namespace SimulationLoto
 {
     class Program
     {
-        static List<int> grid = new List<int>();
-        static int tryNumber;
-        static List<Grille> totalGrille = new List<Grille>();
+        private static List<int> gridInput = new List<int>();
+        private static int tryNumber;
+        private static List<Grille> totalGrille = new List<Grille>();
+        private static List<Grille> gridsWon = new List<Grille>();
 
         static void Main(string[] args)
         {
@@ -21,13 +22,12 @@ namespace SimulationLoto
                     Environment.Exit(0);
                 }
             }
-
         }
 
         private static void Play()
         {
             Console.WriteLine("Choissisez vos chiffres :");
-            grid = ParseInput(Console.ReadLine());
+            gridInput = ParseInput(Console.ReadLine());
 
             Console.WriteLine("Nombre d'essaies :");
             tryNumber = Int32.Parse(Console.ReadLine());
@@ -45,7 +45,7 @@ namespace SimulationLoto
 
             Console.WriteLine($"Nombre d'essaie : {tryNumber}");
             Console.WriteLine($"Numéros choisis : ");
-            grid.ForEach(i => Console.Write("{0}\t", i));
+            gridInput.ForEach(i => Console.Write("{0}\t", i));
             Console.WriteLine("");
 
             int reussiteN = 0;
@@ -62,6 +62,13 @@ namespace SimulationLoto
 
             Console.WriteLine($"Nombre d'echecs : {echecN}");
             Console.WriteLine($"Nombre de reussite : {reussiteN}");
+            if(reussiteN != 0)
+            {
+                foreach(Grille grille in gridsWon)
+                {
+                    Console.WriteLine($"\t- Essaie {grille.index}");
+                }
+            }
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("");
@@ -76,13 +83,15 @@ namespace SimulationLoto
            {
                 totalGrille.Add(grille);
 
-                var numbersNotChoosen = grille.numbers.Except(grid);
-                if(grid.Count == 0)
+                var numbersNotChoosen = grille.numbers.Except(gridInput);
+
+                if (numbersNotChoosen.Count() == 0)
                 {
                     grille.reussite = true;
                     grille.numbers.ForEach(i => Console.Write("{0}\t", i));
                     Console.Write(" REUSSITE !");
                     Console.WriteLine(" ");
+                    gridsWon.Add(grille);
                 }
 
                 grille.numbers.ForEach(i => Console.Write("{0}\t", i));
@@ -111,31 +120,6 @@ namespace SimulationLoto
             list.Sort();
 
             return list;
-        }
-    }
-
-    class Grille
-    {
-        static Random rnd = new Random();
-        int index;
-        public List<int> numbers { get; private set; } = new List<int>();
-        public bool reussite = false;
-
-        public Grille(int _index)
-        {
-            for (int i = 0; i != 5; i++)
-            {
-                int r = rnd.Next(1, 49);
-                while(numbers.Contains(r))
-                {
-                    r = rnd.Next(1, 49);
-                }
-                numbers.Add(r);
-            }
-
-            numbers.Sort();
-
-            index = _index;
         }
     }
 }
