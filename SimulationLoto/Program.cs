@@ -8,8 +8,8 @@ namespace SimulationLoto
     {
         private static List<int> gridInput = new List<int>();
         private static int trialsNumber;
-        private static List<Grid> allPlayedGrids = new List<Grid>();
-        private static List<Grid> gridsWon = new List<Grid>();
+        private static readonly List<Grid> allPlayedGrids = new List<Grid>();
+        private static readonly List<Grid> gridsWon = new List<Grid>();
 
         static void Main(string[] args)
         {
@@ -44,7 +44,7 @@ namespace SimulationLoto
             }
 
             Console.WriteLine($"Total number of trials : {trialsNumber}");
-            Console.WriteLine($"Choosen numbers : ");
+            Console.WriteLine("Choosen numbers : ");
             gridInput.ForEach(i => Console.Write("{0}\t", i));
             Console.WriteLine("");
 
@@ -53,7 +53,7 @@ namespace SimulationLoto
 
             foreach (Grid g in allPlayedGrids)
             {
-                if (g.success == true)
+                if (g.success)
                 {
                     reussiteN++;
                 }
@@ -66,7 +66,7 @@ namespace SimulationLoto
             {
                 foreach(Grid grille in gridsWon)
                 {
-                    Console.WriteLine($"\t- Try {grille.index}");
+                    Console.WriteLine($"\t- Try {grille.Index}");
                 }
             }
             Console.WriteLine("");
@@ -76,25 +76,25 @@ namespace SimulationLoto
 
         private static void Loto()
         {
-           List<Grid> essaie = new List<Grid>() { new Grid(1), new Grid(2), new Grid(3), new Grid(4), new Grid(5)};
+           List<Grid> essaie = new List<Grid>() { new Grid(0), new Grid(1), new Grid(2), new Grid(3), new Grid(4)};
             
 
            foreach(Grid grid in essaie)
            {
                 allPlayedGrids.Add(grid);
 
-                var numbersNotChoosen = grid.numbers.Except(gridInput);
+                var numbersNotChoosen = grid.Numbers.Except(gridInput);
 
-                if (numbersNotChoosen.Count() == 0)
+                if (!numbersNotChoosen.Any())
                 {
                     grid.success = true;
-                    grid.numbers.ForEach(i => Console.Write("{0}\t", i));
+                    grid.Numbers.ForEach(i => Console.Write("{0}\t", i));
                     Console.Write(" SUCCESS !");
                     Console.WriteLine(" ");
                     gridsWon.Add(grid);
                 }
 
-                grid.numbers.ForEach(i => Console.Write("{0}\t", i));
+                grid.Numbers.ForEach(i => Console.Write("{0}\t", i));
                 Console.WriteLine(" ");
             }
 

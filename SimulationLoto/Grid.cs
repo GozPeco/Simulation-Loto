@@ -6,26 +6,26 @@ namespace SimulationLoto
 {
     class Grid
     {
-        public List<int> numbers { get; private set; } = new List<int>();
-        public int index { get; private set; }
+        public List<int> Numbers { get; private set; } = new List<int>();
+        public int Index { get; private set; }
 
         public bool success = false;
 
-        private static Random rnd = new Random();
+        private static readonly Random rnd = new Random();
 
         public Grid(int _index)
         {
             for (int i = 0; i != 5; i++)
             {
                 int r = rnd.Next(1, 49);
-                while (numbers.Contains(r))
+                while (Numbers.Contains(r))
                 {
                     r = rnd.Next(1, 49);
                 }
-                numbers.Add(r);
+                Numbers.Add(r);
             }
-            numbers.Sort();
-            index = _index;
+            Numbers.Sort();
+            Index = _index;
         }
     }
 }
