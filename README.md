@@ -11,3 +11,6 @@ If your grid correspond to any of the random grid, you won ! Otherwise, you lose
 https://github.com/GozPeco/Simulation-Loto
 
 Ceci est un test
+
+
+super pour le loto du village
