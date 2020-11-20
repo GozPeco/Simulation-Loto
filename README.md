@@ -9,3 +9,5 @@ Your numbers are compared to 5 randomly generated "grid", composed of 5 numbers 
 If your grid correspond to any of the random grid, you won ! Otherwise, you lose.
 
 https://github.com/GozPeco/Simulation-Loto
+
+Ceci est un test
