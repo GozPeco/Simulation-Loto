@@ -13,6 +13,8 @@ namespace SimulationLoto
 
         static void Main(string[] args)
         {
+            print("Hello world");
+
             while(true)
             {
                 Play();
